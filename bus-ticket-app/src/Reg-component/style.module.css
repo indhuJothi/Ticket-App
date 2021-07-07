@@ -1,11 +1,16 @@
+
 .form{
-    text-align: center;
-    width: 380px;
-    position: relative;
-    top:10px;
-    padding: 10px;
-    background-color: antiquewhite;
-    margin: auto;
+  margin: 0 auto;
+  width: 300px;
+  position: relative;
+  background-color: thistle;
+  padding: 15px 50px 40px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.error {
+  color: red;
+  font-size: 90%;
 }
 .heading{
     text-align: center;
@@ -22,15 +27,28 @@
   .onelabel{
     display: inline;
     width: 10px;
-    padding: 10px;
-      
+    padding: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 3px;
+    box-sizing: border-box;
   }
 
-    input{
+    input,select{
       border: 1px solid #ccc;
       padding: 10px;
       display: block;
       width: 100%;
       box-sizing: border-box;
       border-radius: 2px;
+    
     }
+ 
+  .submit{
+    font-size: 20px;
+    font-weight: bold;
+    background: #006dcc;
+    color: #fff;
+    margin-top: 10px;
+    cursor: pointer;
+  }
