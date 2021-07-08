@@ -5,7 +5,8 @@ class Registration extends React.Component{
     constructor(props){
         super(props);
         this.state={name:'',
-                    dob:'',email:'',mobile:'',roundway:'',oneway:'',nameErr:'',dobErr:'',emailErr:'',mobileErr:'',radioErr:'',fromErr:''};
+                    dob:'',email:'',mobile:'',roundway:'',oneway:'',from:'select',to:'select',count:'',fromErr:'',nameErr:'',dobErr:'',emailErr:'',mobileErr:'',radioErr:'',fromErr:'',
+                toErr:'',fromdate:'',fromdateErr:'',todate:'',todateErr:''};
         this.handlechange=this.handlechange.bind(this);
         this.handlesubmit=this.handlesubmit.bind(this);
         this.onValueChange=this.onValueChange.bind(this);
@@ -22,6 +23,11 @@ class Registration extends React.Component{
         const dob = target.dob;
         const email=target.email;
         const mobile= target.mobile;
+        const  from=target.from;
+        const to=target.to;
+        const count=target.count;
+        const fromdate=target.fromdate;
+        const todate=target.todate;
      
 
         this.setState(
@@ -31,19 +37,28 @@ class Registration extends React.Component{
                 [dob]:target.value,
                 [email]:target.value,
                 [mobile]:target.value,
+                [from]:target.value,
+                [to]:target.value,
+                [count]:target.value,
+                [fromdate]:target.value,
+                [todate]:target.value
     
                   }
               )
     }
   
     valid=()=>{
-        let nameres=true,dobres=true,emailres=true,mobileres=true,radiores=true,fromres=true;
-        let nameErr='',dobErr='',emailErr='',mobileErr='',radioErr='',fromErr='';
+        let nameres=true,dobres=true,emailres=true,mobileres=true,radiores=true,fromres=true,tores=true,countres=true,fromdateres=true,todateres=true;
+        let nameErr='',dobErr='',emailErr='',mobileErr='',radioErr='',fromErr='',toErr='',countErr='',fromdateErr='',todateErr='';
       
         var nameregex=/^[a-zA-Z\s]{3,15}$/,
         dobregex=/^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])$/,
         emailregex=/^[A-Za-z0-9+_.-]+@(.+)+\.(.+)$/,
-        mobileregex = /^[6-9]\d{9}$/;
+        mobileregex = /^[6-9]\d{9}$/,
+        countregex=/^([1-9]|1[0])$/,
+        fromdateregex=/^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])$/,
+        todateregex=/^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])$/;
+
             if(this.state.name==='')
               {
                   nameErr='Enter your name';
@@ -122,6 +137,77 @@ class Registration extends React.Component{
                 this.setState({radioErr});
                 radiores=true;
             }
+            if(this.state.from==='select'){
+                fromErr='choose one area';
+                this.setState({fromErr});
+                fromres=false;
+            }
+            else{
+                this.setState({fromErr});
+                fromres=true;
+            }
+            if(this.state.to==='select')
+            {
+                toErr='choose one place';
+                this.setState({toErr});
+                tores=false;
+            }
+            else{
+                this.setState({toErr});
+                tores=true;
+            }
+            if(this.state.count===''){
+                countErr='Please Enter a Count of Passengers';
+                this.setState({countErr});
+                countres=false
+            }
+            else{
+                if(countregex.test(this.state.count)===false)
+                {
+                    countErr='Count should be between 1 to 10';
+                    this.setState({countErr});
+                    countres=false;
+                }
+                else{
+                    this.setState({countErr});
+                    countres=true;
+                }
+            }
+            if(this.state.fromdate==='')
+            {
+                fromdateErr='Please enter a from date';
+                this.setState({fromdateErr});
+                fromdateres=false;
+
+            }
+            else{
+                if(fromdateregex.test(this.state.fromdate)===false){
+                    fromdateErr='Please enter a valid date';
+                    this.setState({fromdateErr});
+                    fromdateres=false;
+                }
+                else{
+                    this.setState({fromdateErr});
+                    fromdateres=true;
+                }
+            }
+            if(this.state.todate===''){
+                todateErr='Please enter a to date';
+                this.setState({todateErr});
+                todateres=false;
+            }
+            else{
+                if(todateregex.test(this.state.todate)===false){
+                    todateErr='Please enter a valid date';
+                    this.setState({todateErr});
+                    todateres=false;
+                }
+                else{
+                    this.setState({todateErr});
+                    todateres=true;
+                }
+            }
+         
     }
   
     handlesubmit(event){
@@ -171,7 +257,7 @@ class Registration extends React.Component{
              {this.state.selectedOption==='oneway'?  
                <div   >
                <label class={classes.label}>From</label>
-               <select class={classes.input} class='select' onChange={this.handlechange}>
+               <select class={classes.input} name='from' value={this.state.from} class='select' onChange={this.handlechange}>
                   <option value='select' >select</option>
                    <option value='chennai'>Chennai</option>
                    <option value='Cuddalore' >Cuddalore</option>
@@ -180,76 +266,77 @@ class Registration extends React.Component{
                <div class={classes.error}>{this.state.fromErr}</div>
                <div >
                 <label class={classes.label}>To</label>
-                <select classe={classes.input}>
-                    <option value={this.state.select}>select</option>
-                    <option value={this.state.Madurai}>Madurai</option>
-                    <option vlaue={this.state.Velore}>Velore</option>
-                    <option value={this.state.Bangalore}>Bangalore</option>
+                <select classe={classes.input} name='to'value={this.state.to}  onChange={this.handlechange} >
+                    <option value='select'>select</option>
+                    <option value='Madurai'>Madurai</option>
+                    <option vlaue='Velore'>Velore</option>
+                    <option value='Bangalore'>Bangalore</option>
                 </select>
                 </div>
-                <div >
+                <div class={classes.error}>{this.state.toErr}</div>
+            <div >
                 <label class={classes.label}>BusType</label>
                 <select class={classes.select}>
-                    <option>Non-AC 2S</option>
-                    <option>AC 2S</option>
-                    <option>AC Sleeper</option>
-                    <option>Non-AC Sleeper</option>
+                    <option value='Non-AC 2S'>Non-AC 2S</option>
+                    <option value='AC 2S'>AC 2S</option>
+                    <option value='AC sleeper'>AC Sleeper</option>
+                    <option value='Non-AC sleeper'>Non-AC Sleeper</option>
                 </select>
-                <div ></div>
+                
             </div>
                <div >
                  <label class={classes.label}>Passangers Count</label>
-                 <input class={classes.input} type="text" placeholder="No of Passangers"/> 
-                 <div ></div>
+                 <input class={classes.input} type="text"name='count' value={this.state.count}  onChange={this.handlechange} placeholder="No of Passangers"/> 
+                 <div class={classes.error}>{this.state.countErr}</div>
              </div>
             <div >
-                <label class={classes.label}>From Date<input type="text" placeholder="yyyy/mm/dd" /></label>
-                <div class="error" id='dateErr'></div>
+                <label class={classes.label}>From Date<input type="text" name='fromdate' value={this.state.fromdate} placeholder="yyyy/mm/dd" onChange={this.handlechange} /></label>
+                <div class={classes.error}>{this.state.fromdateErr}</div>
                 </div>
            </div>
             :null}
        {this.state.selectedOption==='roundway'?  
           <div >
           <label class={classes.label}>From</label>
-          <select class={classes.select} onChange={this.handlechange}>
-             <option value={this.state.select}>select</option>
-              <option value={this.state.Chennai}>Chennai</option>
-              <option value={this.state.Cuddalore}>Cuddalore</option>
-              <option value={this.state.Trichy}>Trichy</option>
+          <select class={classes.select} name='from' value={this.state.from}onChange={this.handlechange}>
+             <option value='select'>select</option>
+              <option value='Chennai'>Chennai</option>
+              <option value='Cuddalore'>Cuddalore</option>
+              <option value='Trichy'>Trichy</option>
           </select>
-        
+          <div class={classes.error} >{this.state.fromErr}</div>
                 <label class={classes.label}>To</label>
-                <select classe={classes.input}>
-                    <option value={this.state.select}>select</option>
-                    <option value={this.state.Madurai}>Madurai</option>
-                    <option vlaue={this.state.Velore}>Velore</option>
-                    <option value={this.state.Bangalore}>Bangalore</option>
+                <select classe={classes.input} name='to' value={this.state.to} onChange={this.handlechange}>
+                    <option value='select'>select</option>
+                    <option value='Madurai'>Madurai</option>
+                    <option vlaue='Velore'>Velore</option>
+                    <option value='Bangalore'>Bangalore</option>
                 </select>
-                <div ></div>
+                <div class={classes.error} >{this.state.toErr}</div>
             
             <div >
                 <label class={classes.label}>BusType</label>
                 <select class={classes.select}>
-                    <option>Non-AC 2S</option>
-                    <option>AC 2S</option>
-                    <option>AC Sleeper</option>
-                    <option>Non-AC Sleeper</option>
+                    <option value='Non-AC 2S'>Non-AC 2S</option>
+                    <option value='AC 2S'>AC 2S</option>
+                    <option value='AC Sleeper'>AC Sleeper</option>
+                    <option value='Non-AC Sleeper'>Non-AC Sleeper</option>
                 </select>
                 <div ></div>
             </div>
             <div >
                  <label class={classes.label}>Passangers Count</label>
-                 <input class={classes.input} type="text" placeholder="No of Passangers"/> 
-                 <div ></div>
+                 <input class={classes.input} name='count' value={this.state.count} onChange={this.handlechange} type="text" placeholder="No of Passangers"/> 
+                 <div class={classes.error}>{this.state.countErr}</div>
              </div>
             <div >
-                <label class={classes.label}>From Date<input type="text" placeholder="yyyy/mm/dd" /></label>
-                <div class="error" ></div>
+                <label class={classes.label}>From Date<input type="text" name='fromdate'value={this.state.fromdate}  onChange={this.handlechange} placeholder="yyyy/mm/dd" /></label>
+                <div class={classes.error}>{this.state.fromdateErr}</div>
                 </div>
             <div>
-            <label class={classes.label}>Return Date<input type="text" placeholder="yyyy/mm/dd" />
+            <label class={classes.label}>Return Date<input type="text" name='todate' value={this.state.todate} onChange={this.handlechange} placeholder="yyyy/mm/dd" />
             </label>
-            <div ></div>
+            <div class={classes.error} >{this.state.todateErr}</div>
             </div>
             <div >
           
