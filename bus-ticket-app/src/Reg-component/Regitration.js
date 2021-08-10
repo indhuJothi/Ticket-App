@@ -1,22 +1,46 @@
 import React from "react";
-// import reactDom from "react-dom";
 import classes from './style.module.css'
 
 class Registration extends React.Component{
     constructor(props){
         super(props);
-        this.state={name:'',
-                  selectedOption:'',  dob:'',email:'',mobile:'',roundway:'',oneway:'',bustype:'Non-AC 2S',from:'select',to:'select',count:'',fromErr:'',nameErr:'',dobErr:'',emailErr:'',mobileErr:'',radioErr:'',
-                toErr:'',fromdate:'',fromdateErr:'',todate:'',todateErr:''};
+        this.state={
+            name:'',
+            selectedOption:'',  
+            dob:'', 
+            email:'',
+            mobile:'',
+            roundway:'',
+            oneway:'',
+            bustype:'Non-AC 2S',
+            from:'select',
+            to:'select',
+            count:'',
+            fromErr:'',
+            nameErr:'',
+            dobErr:'',
+            emailErr:'',
+            mobileErr:'',
+            radioErr:'',
+            toErr:'',
+            fromdate:'',
+            fromdateErr:'',
+            todate:'',
+            todateErr:''
+            };
         this.handlechange=this.handlechange.bind(this);
+
         this.handlesubmit=this.handlesubmit.bind(this);
+
         this.onValueChange=this.onValueChange.bind(this);
     }
+
     onValueChange(event) {
         this.setState({
           selectedOption: event.target.value
          });
       }
+    
    
     handlechange(event){
         const target= event.target;
@@ -30,8 +54,8 @@ class Registration extends React.Component{
         const bustype=target.bustype;
         const fromdate=target.fromdate;
         const todate=target.todate;
-     
-
+    
+    
         this.setState(
             {
             
@@ -51,8 +75,27 @@ class Registration extends React.Component{
     }
   
     valid=()=>{
-        let nameres=true,dobres=true,emailres=true,mobileres=true,radiores=true,fromres=true,tores=true,countres=true,fromdateres=true,todateres=true;
-        let nameErr='',dobErr='',emailErr='',mobileErr='',radioErr='',fromErr='',toErr='',countErr='',fromdateErr='',todateErr='';
+        let nameres=true,
+        dobres=true,
+        emailres=true,
+        mobileres=true,
+        radiores=true,
+        fromres=true,
+        tores=true,
+        countres=true,
+        fromdateres=true,
+        todateres=true;
+        let nameErr='',
+        dobErr='',
+        emailErr='',
+        mobileErr='',
+        radioErr='',
+        fromErr='',
+        toErr='',
+        countErr='',
+        fromdateErr='',
+        todateErr='';
+        
         let dobCalc=new Date(this.state.dob);
         let dobYear=dobCalc.getFullYear();
         let todayDate=new Date();
@@ -341,10 +384,10 @@ class Registration extends React.Component{
                 </div>
                 <div class={classes.travetype}>
                     <label class={classes.label}>Oneway: </label>
-                    <input class={classes.onelabel} value='oneway' type='radio' checked={this.state.selectedOption ==="oneway"}
+                    <input class={classes.onelabel} value='oneway' type='radio' checked={this.state.selectedOption==='oneway'}
               onChange={this.onValueChange}/>
                     <label class={classes.label} >Roundway: </label>
-                    <input class={classes.onelabel} value='roundway' type='radio' checked={this.state.selectedOption === "roundway"}
+                    <input class={classes.onelabel} value='roundway' type='radio' checked={this.state.selectedOption==='roundway'}
               onChange={this.onValueChange}/>            
                <div class={classes.error} >{this.state.radioErr}</div>
                 </div>
@@ -418,7 +461,7 @@ class Registration extends React.Component{
                     <option value='AC Sleeper'>AC Sleeper</option>
                     <option value='Non-AC Sleeper'>Non-AC Sleeper</option>
                 </select>
-                <div ></div>
+                {/* <div ></div> */}
             </div>
             <div >
                  <label class={classes.label}>Passangers Count</label>
@@ -428,15 +471,13 @@ class Registration extends React.Component{
             <div >
                 <label class={classes.label}>From Date<input type="text" name='fromdate'value={this.state.fromdate}  onChange={this.handlechange} placeholder="yyyy/mm/dd" /></label>
                 <div class={classes.error}>{this.state.fromdateErr}</div>
-                </div>
+          </div>
             <div>
             <label class={classes.label}>Return Date<input type="text" name='todate' value={this.state.todate} onChange={this.handlechange} placeholder="yyyy/mm/dd" />
             </label>
             <div class={classes.error} >{this.state.todateErr}</div>
             </div>
-            <div >
-          
-        </div></div>
+            </div>
               
              :null}
   
